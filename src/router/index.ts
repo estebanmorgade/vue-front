@@ -20,7 +20,7 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const user = useUserStore()
   const isProtected = to.meta.requiresAuth
 
