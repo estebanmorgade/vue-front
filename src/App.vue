@@ -1,16 +1,33 @@
 <script setup lang="ts">
+import { useUserStore } from './stores/useUserStore';
+import { useRouter } from 'vue-router';
+
+const user = useUserStore()
+const router = useRouter()
+
+function handleLogout() {
+        user.logout()
+        router.push('/login')
+    }
 </script>
 
 <template>
-  <div>
+  <header>
     <nav>
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/users">Users</router-link>
+      <div v-if="user.isAuthenticated">
+        <router-link to="/about">About</router-link> |
+        <router-link to="/users">Users</router-link> |
+        <button @click="handleLogout">Logout</button>
+      </div>
+      <router-link v-else to="/login">Login</router-link>
+      
     </nav>
     <hr />
+  </header>
+  <main>
     <router-view />
-  </div>
+  </main>
 </template>
 
 <style scoped>

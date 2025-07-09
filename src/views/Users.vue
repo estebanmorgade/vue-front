@@ -3,6 +3,7 @@
     import { getUsers, createUser } from '../services/api';
     import UserCard from '../components/UserCard.vue';
     import type { User } from '../types/user';
+    
 
     const users = ref<User[]>([])
     const name = ref('')
