@@ -1,28 +1,10 @@
 <script setup lang="ts">
-import { useUserStore } from './stores/useUserStore';
-import { useRouter } from 'vue-router';
-
-const user = useUserStore()
-const router = useRouter()
-
-function handleLogout() {
-        user.logout()
-        router.push('/login')
-    }
+  import Navbar from './components/Navbar.vue';
 </script>
 
 <template>
   <header>
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <div v-if="user.isAuthenticated">
-        <router-link to="/about">About</router-link> |
-        <router-link to="/users">Users</router-link> |
-        <button @click="handleLogout">Logout</button>
-      </div>
-      <router-link v-else to="/login">Login</router-link>
-      
-    </nav>
+    <Navbar/>
     <hr />
   </header>
   <main>

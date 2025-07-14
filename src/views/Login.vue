@@ -1,26 +1,25 @@
 <script setup lang="ts">
+    import { ref } from 'vue';
     import  { useUserStore } from '../stores/useUserStore'
-    import { useRouter } from 'vue-router';
 
-    const user = useUserStore()
-    const router = useRouter()
+    const email = ref('')
+    const password = ref('')
+    const userStore = useUserStore()
 
-    function doLogin() {
-        user.login({
-            name: 'Esteban',
-            email: 'gadesito@gmail.com',
-            token: 'mock123'
-        })
-
-        router.push('/users')
+    const submit = () => {
+        userStore.login(email.value, password.value)
     }
-
 </script>
 
 
 <template>
     <div>
         <h2>Login</h2>
-        <button @click="doLogin">Simular login</button>
+        <form @submit.prevent="submit">
+            <input type="email" v-model="email" placeholder="Email" />
+            <input type="password" v-model="password" placeholder="Password" />
+            <button :disabled="userStore.loading">Login</button>
+            <p v-if="userStore.error" class="text-red-500">{{  userStore.error }}</p>
+        </form>
     </div>
 </template>
