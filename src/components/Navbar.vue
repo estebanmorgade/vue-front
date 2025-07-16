@@ -7,8 +7,8 @@
     const router = useRouter()
     const isOpen = ref(false)
 
-    function handleLogout() {
-        userStore.logout()
+    async function handleLogout() {
+        await userStore.logout()
         router.push('/login')
         isOpen.value = false
     }
