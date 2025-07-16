@@ -23,6 +23,7 @@ export const useUserStore = defineStore('user', {
                 const res = await axios.post('/login', { email, password })
                 this.user = res.data.user
                 this.token = res.data.token
+                localStorage.setItem('token', this.token ?? '')
                 axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
             } catch (err: any) {
                 this.error = err.response?.data?.message || 'Login failed'
@@ -37,6 +38,7 @@ export const useUserStore = defineStore('user', {
                 this.user = res.data
             } catch (error) {
                 this.user = null
+                this.token = null
             }
         },
 
@@ -47,7 +49,17 @@ export const useUserStore = defineStore('user', {
 
             this.user = null
             this.token = null
+            localStorage.removeItem('token')
             delete axios.defaults.headers.common['Authorization']
+        },
+
+        async initAuth() {
+            const savedToken = localStorage.getItem('token')
+            if(savedToken) {
+                this.token = savedToken
+                axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+                await this.fetchUser()
+            }
         }
     }
 

@@ -24,7 +24,7 @@ router.beforeEach((to, _from, next) => {
   const user = useUserStore()
   const isProtected = to.meta.requiresAuth
 
-  if(isProtected && !user.isAuthenticated){
+  if(isProtected && !user.isLoggedIn){
     next('/login')
   } else {
     next()
