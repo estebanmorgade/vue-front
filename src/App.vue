@@ -1,5 +1,22 @@
 <script setup lang="ts">
+  import { useRoute } from 'vue-router';
+  import { computed } from 'vue';
+
+  //layouts import
   import Navbar from './components/Navbar.vue';
+  import DefaultLayout from './components/layouts/DefaultLayout.vue';
+  import AdminLayout from './components/layouts/AdminLayout.vue';
+  import AuthLayout from './components/layouts/AuthLayout.vue';
+
+  // Map layouts
+  const layouts: Record<string, any> = {
+    DefaultLayout,
+    AdminLayout,
+    AuthLayout
+  }
+
+  const route = useRoute()
+  const layoutName = computed(() => route.meta.layout as keyof typeof layouts || 'DefaultLayout')
 </script>
 
 <template>
@@ -7,9 +24,9 @@
     <Navbar/>
     <hr />
   </header>
-  <main>
+  <component :is="layouts[layoutName]">
     <router-view />
-  </main>
+  </component>
 </template>
 
 <style scoped>

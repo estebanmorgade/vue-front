@@ -23,8 +23,9 @@
 
             <!-- Links -->
             <div class="hidden md:flex space-x-4 items-center">
-                <router-link v-if="userStore.isLoggedIn" to="/about" class="hover:text-blue-300">About</router-link>
-                <router-link v-if="userStore.isLoggedIn" to="/users" class="hover:text-blue-300">Users</router-link>
+                <router-link to="/about" class="hover:text-blue-300">About</router-link>
+                <router-link v-if="['admin', 'superadmin'].includes(userStore.user?.role ?? '')" to="/adminDashboard" class="hover:text-blue-300">Admin dashboard</router-link>
+                <router-link v-if="userStore.isLoggedIn" to="/profile" class="hover:text-blue-300">My profile</router-link>
                 <span v-if="userStore.isLoggedIn" class="text-sm text-gray-300">Hola, {{ userStore.user?.name }}</span>
                 <button v-if="userStore.isLoggedIn" type="button" @click="handleLogout" class="bg-red-500 px-3 py-1 rounded hover:bg-red-600 text-sm">Logout</button>
                 <router-link v-else to="/login" class="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600 text-sm">Login</router-link>
@@ -43,8 +44,8 @@
         <!-- Menu Mobile -->
         <div v-if="isOpen" class="md:hidden mt-2 space-y-2 text-center">
             <router-link to="/" class="block">Home</router-link>
+            <router-link to="/about" class="block">About</router-link>
             <div v-if="userStore.isLoggedIn">
-                <router-link to="/about" class="block">About</router-link>
                 <router-link to="/users" class="block">Users</router-link>
                 <span class="blocktext-sm text-gray-300">Hola, {{ userStore.user?.name }}</span>
                 <button type="button" @click="handleLogout" class="bg-red-500 w-full px-3 py-1 rounded hover:bg-red-600 text-sm">Logout</button>

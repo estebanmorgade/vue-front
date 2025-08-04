@@ -6,6 +6,7 @@ export const useUserStore = defineStore('user', {
     
     state: () => ({
         user: null as User | null,
+        users: null as User[] | null,
         token: null as string | null,
         loading: false,
         error: null as string | null    
@@ -60,6 +61,11 @@ export const useUserStore = defineStore('user', {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
                 await this.fetchUser()
             }
+        },
+
+        async getUsers() {
+            const res = await axios.get('/users')
+            this.users = res.data
         }
     }
 

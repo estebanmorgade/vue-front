@@ -25,4 +25,7 @@ const props = defineProps<{
     <div>
         <DeleteButton @confirm="handleDelete"/>
     </div>
+    <div>
+        <router-link :to="`/users/${user.id}/edit`">Edit</router-link>
+    </div>
 </template>

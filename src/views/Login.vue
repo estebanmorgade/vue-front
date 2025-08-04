@@ -12,7 +12,10 @@
         await userStore.login(email.value, password.value)
 
         if(userStore.isLoggedIn)
-            router.push('/dashboard')
+            if(userStore.user?.role === 'admin' || userStore.user?.role === 'superadmin')
+                router.push('/adminDashboard')
+            else
+                router.push('/dashboard')
     }
 </script>
 
