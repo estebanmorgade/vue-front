@@ -43,7 +43,7 @@ defineExpose({validate})
     <span v-if="errors.password" class="text-red-500 text-sm">{{ errors.password }}</span>
     <span v-if="!errors.password && useUsersStore().errors.password" class="text-red-500 text-sm">{{ useUsersStore().errors.password[0] }}</span>
 
-    <button type="submit">
+    <button type="submit" :disabled="useUsersStore().loading" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 flex items-center justify-center">
       <Loader v-if="useUsersStore().loading" :size="18" color="text-white"/>
       <span>{{ !useUsersStore().loading ? (user.id ? 'Edit user' : 'Create user') : 'Loading...' }}</span>
     </button>

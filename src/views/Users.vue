@@ -25,7 +25,10 @@
         usersStore.loading = true
         const valid = await formRef.value.validate()
 
-        if (!valid) return
+        if (!valid) {
+            usersStore.loading = false
+            return
+        }
 
         try {
             await usersStore.addUser(user.value)
