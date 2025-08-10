@@ -4,6 +4,7 @@
     import UserCard from '../components/UserCard.vue';
     import type { User } from '../types/user';
     import UserForm from '../components/UserForm.vue';
+    import Loader from '../components/Loader.vue';
     
 
     const usersStore = useUsersStore()
@@ -56,7 +57,10 @@
             <UserForm v-model:user="user" ref="formRef" />
         </form>
 
-        <div v-if="usersStore.loading">Cargando...</div>
+        <div v-if="usersStore.loading">
+            <Loader/>
+            <span>Cargando...</span>
+        </div>
         <div v-else-if="Object.keys(usersStore.errors).length !== 0">{{ usersStore.errors }}</div>
         <ul v-else>
             <li v-for="u in usersStore.users">

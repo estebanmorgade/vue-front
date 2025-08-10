@@ -2,6 +2,7 @@
 import type {User} from '../types/user';
 import { ref } from 'vue';
 import { useUsersStore } from '../stores/useUsersStore';
+import Loader from './Loader.vue';
 
 
 const user = defineModel<User>('user',{required: true})
@@ -42,5 +43,8 @@ defineExpose({validate})
     <span v-if="errors.password" class="text-red-500 text-sm">{{ errors.password }}</span>
     <span v-if="!errors.password && useUsersStore().errors.password" class="text-red-500 text-sm">{{ useUsersStore().errors.password[0] }}</span>
 
-    <button type="submit">{{ user.id ? 'Edit user' : 'Create user' }}</button>
+    <button type="submit">
+      <Loader v-if="useUsersStore().loading" :size="18" color="text-white"/>
+      <span>{{ !useUsersStore().loading ? (user.id ? 'Edit user' : 'Create user') : 'Loading...' }}</span>
+    </button>
 </template>
