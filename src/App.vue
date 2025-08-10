@@ -25,21 +25,22 @@
     <hr />
   </header>
   <component :is="layouts[layoutName]">
-    <router-view />
+    <transition name="fade" mode="out-in">
+      <router-view :key="$route.name" />
+    </transition>
   </component>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.fade-enter-to, .fade-leave-from {
+  opacity: 1;
 }
+
 </style>

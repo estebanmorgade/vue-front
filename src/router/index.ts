@@ -1,31 +1,25 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
-import About from '../views/About.vue'
-import NotFound from '../views/errors/NotFound.vue'
-import Login from '../views/Login.vue'
-import Users from '../views/Users.vue'
 import { useUserStore } from '../stores/useUserStore'
-import Dashboard from '../views/Dashboard.vue'
-import AdminDashboard from '../views/AdminDashboard.vue'
-import Unauthorized from '../views/errors/Unauthorized.vue'
-import UserEdit from '../views/UserEdit.vue'
+import { publicRoutes } from './routes/public'
+import { adminRoutes } from './routes/admin'
+import { userRoutes } from './routes/user'
+
+
 
 const routes: RouteRecordRaw[] = [
-  { path: '/', component: Home },
-  { path: '/about', component: About },
-  { path: '/users', component: Users, meta: { layout: 'AdminLayout', requiresAuth: true, requiresRole: 'superadmin'}},
-  { path: '/unauthorized', component: Unauthorized},
-  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
-  { path: '/login', component: Login, meta: {layout: 'AuthLayout', guestOnly: true}},
-  { path: '/dashboard', component: Dashboard, meta: { layout: 'DefaultLayout', requiresAuth: true, requiresRole: 'user'}},
-  { path: '/adminDashboard', component: AdminDashboard, meta: { layout: 'AdminLayout', requiresAuth: true, requiresRole: ['admin','superadmin']}},
-  { path: '/users/:id/edit', component: UserEdit, meta: {layout: 'AdminLayout', requiresAuth: true, requiresRole: 'superadmin'}}
+  ...publicRoutes,
+  adminRoutes,
+  userRoutes,
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('../views/errors/NotFound.vue') }//avoid to load it unnecessary
 ]
 
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior() {
+    return {top:0}
+  }
 })
 
 router.beforeEach(async (to, _from, next) => {
