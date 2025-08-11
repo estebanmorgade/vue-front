@@ -28,7 +28,7 @@ const breadcrumbs = computed(() => {
       const label = typeof crumb === 'function' ? crumb(route) : crumb
       return {
         label,
-        to: r.path.includes(':') ? undefined : r.path // solo link si no tiene :id dinámico
+        to: r.path//r.path.includes(':') ? undefined : r.path // solo link si no tiene :id dinámico
       }
     })
 })

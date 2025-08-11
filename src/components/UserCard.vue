@@ -3,7 +3,7 @@ import DeleteButton from './DeleteButton.vue'
 import type { User } from '../types/user'
 
 function handleDelete() {
-    emit('delete', props.user.id)
+    emit('delete', props.user.id as number)
 }
 
 const emit = defineEmits<{
