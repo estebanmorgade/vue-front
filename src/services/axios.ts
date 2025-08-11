@@ -3,7 +3,7 @@ import router from "../router";
 import { useUserStore } from "../stores/useUserStore";
 
 const api = axios.create({
-    baseURL: 'http://cursolaravel.test/api',
+    baseURL: import.meta.env.VITE_API_URL,
     withCredentials: true
 })
 
