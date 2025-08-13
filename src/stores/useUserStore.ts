@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import type { User } from "../types/user"
 import axios from "../services/axios";
+import { useNotificationStore } from "./useNotificationStore";
 
 export const useUserStore = defineStore('user', {
     
@@ -20,6 +21,7 @@ export const useUserStore = defineStore('user', {
         async login(email: string, password: string) {
             this.loading = true
             this.error = null
+            const notificationStore = useNotificationStore()
             try {
                 const res = await axios.post('/login', { email, password })
                 this.user = res.data.user
@@ -27,7 +29,7 @@ export const useUserStore = defineStore('user', {
                 localStorage.setItem('token', this.token ?? '')
                 axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
             } catch (err: any) {
-                this.error = err.response?.data?.message || 'Login failed'
+                notificationStore.show(this.error = err.response?.data?.message || 'Login failed', 'error')
             } finally {
                 this.loading = false
             }
@@ -61,11 +63,6 @@ export const useUserStore = defineStore('user', {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
                 await this.fetchUser()
             }
-        },
-
-        async getUsers() {
-            const res = await axios.get('/users')
-            this.users = res.data
         }
     }
 

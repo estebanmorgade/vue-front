@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import type { User } from "../types/user"
 import axios from "../services/axios";
+import { useNotificationStore } from "./useNotificationStore";
 
 export const useUsersStore = defineStore('users', {
     
@@ -15,11 +16,12 @@ export const useUsersStore = defineStore('users', {
         async fetchUsers() {
             this.loading = true
             this.clearErrors()
+            const notificationStore = useNotificationStore()
             try {
                 const res = await axios.get('/users')
                 this.users = res.data
             } catch (err: any) {
-                this.errors = err.response?.data?.errors || 'Error fetching users'
+                notificationStore.show(this.errors = err.response?.data?.errors || 'Error fetching users', 'error')
             } finally {
                 this.loading = false
             }
@@ -28,11 +30,13 @@ export const useUsersStore = defineStore('users', {
         async deleteUser(id: number) {
             this.loading = true
             this.clearErrors()
+            const notificationStore = useNotificationStore()
             try {
-                await axios.delete(`/users/${id}`)
+                const res = await axios.delete(`/users/${id}`)
+                res.status === 200 && notificationStore.show(res.data.message, 'success')
                 this.users = this.users.filter(user => user.id !== id)
             } catch (err: any) {
-                this.errors = err.response?.data?.errors || 'Error deleting user'
+                notificationStore.show(this.errors = err.response?.data?.errors || 'Error deleting user', 'error')
             } finally {
                 this.loading = false
             }
@@ -41,11 +45,13 @@ export const useUsersStore = defineStore('users', {
         async addUser(user: User) {
             this.loading = true
             this.clearErrors()
+            const notificationStore = useNotificationStore()
             try {
-                const response = await axios.post('/users', user)
-                this.users.push(response.data)
+                const res = await axios.post('/users', user)
+                res.status === 201 && notificationStore.show('User created successfully', 'success')
+                this.users.push(res.data)
             } catch (err: any) {
-                this.errors = err.response?.data?.errors || 'Error adding user'
+                notificationStore.show(this.errors = err.response?.data?.errors || 'Error adding user', 'error')
             } finally {
                 this.loading = false
             }
@@ -54,11 +60,13 @@ export const useUsersStore = defineStore('users', {
         async editUser(user: User) {
             this.loading = true
             this.clearErrors()
+            const notificationStore = useNotificationStore()
             try {
-                const response = await axios.put(`/users/${user.id}`, user)
-                this.users.push(response.data)
+                const res = await axios.put(`/users/${user.id}`, user)
+                res.status === 200 && notificationStore.show('User edited successfully', 'success')
+                this.users.push(res.data)
             } catch (err: any) {
-                this.errors = err.response?.data?.errors || 'Error editing user'
+                notificationStore.show(this.errors = err.response?.data?.errors || 'Error editing user', 'error')
             } finally {
                 this.loading = false
             }

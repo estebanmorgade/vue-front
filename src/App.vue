@@ -7,6 +7,7 @@
   import DefaultLayout from './components/layouts/DefaultLayout.vue';
   import AdminLayout from './components/layouts/AdminLayout.vue';
   import AuthLayout from './components/layouts/AuthLayout.vue';
+  import NotificationBar from './components/NotificationBar.vue';
 
   // Map layouts
   const layouts: Record<string, any> = {
@@ -29,6 +30,11 @@
       <router-view :key="$route.name" />
     </transition>
   </component>
+  <footer>
+    <p class="text-center text-gray-500 mt-4">© 2025 Your Company</p>
+    <p class="text-center text-gray-500 mt-2">All rights reserved.</p>
+    <NotificationBar />
+  </footer>
 </template>
 
 <style scoped>
