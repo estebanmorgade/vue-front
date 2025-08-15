@@ -3,6 +3,7 @@ import type {User} from '../types/user';
 import { ref } from 'vue';
 import { useUsersStore } from '../stores/useUsersStore';
 import Loader from './Loader.vue';
+import InputForm from './InputForm.vue';
 
 
 const user = defineModel<User>('user',{required: true})
@@ -27,21 +28,43 @@ defineExpose({validate})
 </script>
 
 <template>
-    <input v-model="user.name" placeholder="Name" :class="['border',{'border-red-500': !user.name}]" required />
-    <span v-if="errors.name" class="text-red-500 text-sm">{{ errors.name }}</span>
-    <span v-if="!errors.name && useUsersStore().errors.name">{{ useUsersStore().errors.name[0] }}</span>
+    <InputForm
+        v-model="user.name"
+        label="Name"
+        name="name"
+        placeholder="Enter your name"
+        :required="true"
+        :error="errors.name || useUsersStore().errors.name?.[0]"
+    />
 
-    <input v-model="user.email" placeholder="Email" type="email" :class="['border',{'border-red-500': !user.email}]" required />
-    <span v-if="errors.email" class="text-red-500 text-sm">{{ errors.email }}</span>
-    <span v-if="!errors.email && useUsersStore().errors.email" class="text-red-500 text-sm">{{ useUsersStore().errors.email[0] }}</span>
+    <InputForm
+        v-model="user.email"
+        label="Email"
+        name="email"
+        type="email"
+        placeholder="Enter your email"
+        :required="true"
+        :error="errors.email || useUsersStore().errors.email?.[0]"
+    />
 
-    <input v-model="user.role" placeholder="Role" :class="['border',{'border-red-500': !user.role}]" required>
-    <span v-if="errors.role" class="text-red-500 text-sm">{{ errors.role }}</span>
-    <span v-if="!errors.role && useUsersStore().errors.role" class="text-red-500 text-sm">{{ useUsersStore().errors.role[0] }}</span>
+    <InputForm
+        v-model="user.role"
+        label="Role"
+        name="role"
+        placeholder="Chose a role"
+        :required="true"
+        :error="errors.role || useUsersStore().errors.role?.[0]"
+    />
 
-    <input v-model="user.password" placeholder="Password" type="password" :class="['border',{'border-red-500': !user.password}]" :required="!user.id">
-    <span v-if="errors.password" class="text-red-500 text-sm">{{ errors.password }}</span>
-    <span v-if="!errors.password && useUsersStore().errors.password" class="text-red-500 text-sm">{{ useUsersStore().errors.password[0] }}</span>
+    <InputForm
+        v-model="user.password"
+        label="Password"
+        name="password"
+        type="password"
+        placeholder="Enter your password"
+        :required="!user.id"
+        :error="errors.password || useUsersStore().errors.password?.[0]"
+    />
 
     <button type="submit" :disabled="useUsersStore().loading" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 flex items-center justify-center">
       <Loader v-if="useUsersStore().loading" :size="18" color="text-white"/>

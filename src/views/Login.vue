@@ -2,6 +2,7 @@
     import { ref } from 'vue';
     import  { useUserStore } from '../stores/useUserStore'
     import { useRouter } from 'vue-router';
+import InputForm from '../components/InputForm.vue';
 
     const email = ref('')
     const password = ref('')
@@ -24,9 +25,24 @@
     <div>
         <h2>Login</h2>
         <form @submit.prevent="submit">
-            <input type="email" v-model="email" placeholder="Email" />
-            <input type="password" v-model="password" placeholder="Password" />
-            <button :disabled="userStore.loading">
+            <InputForm
+                v-model="email"
+                label="Email"
+                name="email"
+                type="email"
+                placeholder="Enter your email"
+                :required="true"
+            />
+
+            <InputForm
+                v-model="password"
+                label="Password"
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+                :required="true"
+            />
+            <button :disabled="userStore.loading" type="submit">
                 <svg
                     v-if="userStore.loading"
                     class="animate-spin h-5 w-5 mr-2 text-white"
