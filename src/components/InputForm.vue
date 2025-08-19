@@ -24,7 +24,7 @@ const inputValue = computed({
 <template>
     <div class="mb-4">
         <label :for="name" class="block text-sm font-medium text-gray-700 mb-1">
-        {{ label }} <span v-if="required" class="text-red-500">*</span>
+        {{ label }} <span v-if="!inputValue && required" class="text-red-500">*</span>
         </label>
         <input
         :id="name"

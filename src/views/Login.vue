@@ -2,7 +2,7 @@
     import { ref } from 'vue';
     import  { useUserStore } from '../stores/useUserStore'
     import { useRouter } from 'vue-router';
-import InputForm from '../components/InputForm.vue';
+    import InputForm from '../components/InputForm.vue';
 
     const email = ref('')
     const password = ref('')
