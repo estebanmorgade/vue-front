@@ -4,7 +4,7 @@ import { computed } from 'vue';
 interface InputFormProps {
     label: string;
     name: string;
-    modelValue: string | number;
+    modelValue: string | number | null;
     type?: string;
     required?: boolean;
     error?: string;
