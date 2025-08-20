@@ -1,5 +1,14 @@
 <script setup lang="ts">
     import { useUserStore } from '../stores/useUserStore';
+    import { useHead } from '@vueuse/head';
+
+    useHead({
+        title: 'Home',
+        meta: [
+            { name: 'description', content: 'Welcome to the home page' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+        ]
+    });
 
     const userUser = useUserStore()
 </script>

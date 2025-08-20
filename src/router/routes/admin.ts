@@ -1,24 +1,21 @@
 import type { RouteRecordRaw } from 'vue-router'
-import Users from '../../views/Users.vue'
-import UserEdit from '../../views/UserEdit.vue'
-import AdminLayout from '../../components/layouts/AdminLayout.vue'
 
 export const adminRoutes: RouteRecordRaw =
-    { path: '/adminDashboard', component: AdminLayout,
+    { path: '/adminDashboard', component: () => import('../../components/layouts/AdminLayout.vue'),
         meta: {
             requiresAuth: true,
             requiresRole: ['admin','superadmin'],
             breadcrumb: 'Admin dashboard'
         },
         children: [
-            { path: 'users', component: Users,
+            { path: 'users', component: () => import('../../views/Users.vue'),
                 meta: { 
                     requiresAuth: true,
                     requiresRole: 'superadmin',
                     breadcrumb: 'Users'
                 }
             },
-            { path: 'users/:id/edit', component: UserEdit,
+            { path: 'users/:id/edit', component: () => import('../../views/UserEdit.vue'),
                 meta: {
                     requiresAuth: true,
                     requiresRole: 'superadmin',

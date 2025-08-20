@@ -2,7 +2,16 @@
     import { ref } from 'vue';
     import  { useUserStore } from '../stores/useUserStore'
     import { useRouter } from 'vue-router';
+    import { useHead } from '@vueuse/head';
     import InputForm from '../components/InputForm.vue';
+
+    useHead({
+        title: 'Login',
+        meta: [
+            { name: 'description', content: 'Login to your account' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+        ]
+    });
 
     const email = ref('')
     const password = ref('')
