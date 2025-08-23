@@ -11,14 +11,14 @@ export const adminRoutes: RouteRecordRaw =
             { path: 'users', component: () => import('../../views/Users.vue'),
                 meta: { 
                     requiresAuth: true,
-                    requiresRole: 'superadmin',
+                    requiresRole: ['admin','superadmin'],
                     breadcrumb: 'Users'
                 }
             },
             { path: 'users/:id/edit', component: () => import('../../views/UserEdit.vue'),
                 meta: {
                     requiresAuth: true,
-                    requiresRole: 'superadmin',
+                    requiresRole: ['admin','superadmin'],
                     breadcrumb: 'User Edit'
                 }
             }
