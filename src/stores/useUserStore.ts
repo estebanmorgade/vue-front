@@ -2,7 +2,9 @@ import { defineStore } from "pinia";
 import type { User } from "../types/user"
 import axios from "../services/axios";
 import { useNotificationStore } from "./useNotificationStore";
+import { useAuthStorage } from "../composables/useAuthStorage";
 
+// src/stores/useUserStore.ts
 export const useUserStore = defineStore('user', {
     
     state: () => ({
@@ -22,11 +24,12 @@ export const useUserStore = defineStore('user', {
             this.loading = true
             this.error = null
             const notificationStore = useNotificationStore()
+            const { saveToken } = useAuthStorage()
             try {
                 const res = await axios.post('/login', { email, password })
                 this.user = res.data.user
                 this.token = res.data.token
-                localStorage.setItem('token', this.token ?? '')
+                saveToken(this.token as string)
                 axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
             } catch (err: any) {
                 notificationStore.show(this.error = err.response?.data?.message || 'Login failed', 'error')
@@ -35,7 +38,7 @@ export const useUserStore = defineStore('user', {
             }
         },
 
-        async fetchUser() {
+        async fetchUser() { // get current user
             try {
                 const res = await axios.get('/me')
                 this.user = res.data
@@ -50,14 +53,16 @@ export const useUserStore = defineStore('user', {
                 await axios.post('/logout')
             } catch (_) {}
 
+            const { clearToken } = useAuthStorage()
             this.user = null
             this.token = null
-            localStorage.removeItem('token')
+            clearToken()
             delete axios.defaults.headers.common['Authorization']
         },
 
         async initAuth() {
-            const savedToken = localStorage.getItem('token')
+            const { getToken } = useAuthStorage()
+            const savedToken = getToken()
             if(savedToken) {
                 this.token = savedToken
                 axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
