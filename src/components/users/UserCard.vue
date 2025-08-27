@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import DeleteButton from './DeleteButton.vue'
-import type { User } from '../types/user'
+import DeleteButton from '../DeleteButton.vue'
+import type { User } from '../../types/user'
 
 function handleDelete() {
     emit('delete', props.user.id as number)
@@ -18,14 +18,14 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div style="border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem;">
-        <h3>{{ user.name }}</h3>
-        <p>{{ user.email }}</p>
-    </div>
-    <div>
-        <DeleteButton @confirm="handleDelete"/>
-    </div>
-    <div>
+    <td class="p-2">{{ user.id }}</td>
+    <td class="p-2">{{ user.name }}</td>
+    <td class="p-2">{{ user.email }}</td>
+    <td class="p-2">{{ user.role }}</td>
+    <td class="p-2">
         <router-link :to="`users/${user.id}/edit`">Edit</router-link>
-    </div>
+    </td>
+    <td class="p-2">
+        <DeleteButton @confirm="handleDelete"/>
+    </td>
 </template>

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import type {User} from '../types/user';
+import type {User} from '../../types/user';
 import { ref } from 'vue';
-import { useUsersStore } from '../stores/useUsersStore';
-import Loader from './Loader.vue';
-import InputForm from './InputForm.vue';
+import { useUsersStore } from '../../stores/useUsersStore';
+import InputForm from '../InputForm.vue';
 
 
 const user = defineModel<User>('user',{required: true})
@@ -66,8 +65,7 @@ defineExpose({validate})
         :error="errors.password || useUsersStore().errors.password?.[0]"
     />
 
-    <button type="submit" :disabled="useUsersStore().loading" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 flex items-center justify-center">
-      <Loader v-if="useUsersStore().loading" :size="18" color="text-white"/>
-      <span>{{ !useUsersStore().loading ? (user.id ? 'Edit user' : 'Create user') : 'Loading...' }}</span>
+    <button type="submit" :disabled="useUsersStore().loading" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+      <span>{{ user.id ? 'Edit user' : 'Create user' }}</span>
     </button>
 </template>

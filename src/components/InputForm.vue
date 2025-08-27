@@ -23,7 +23,7 @@ const inputValue = computed({
 
 <template>
     <div class="mb-4">
-        <label :for="name" class="block text-sm font-medium text-gray-700 mb-1">
+        <label :for="name" class="block text-sm font-medium text-gray-600">
         {{ label }} <span v-if="!inputValue && required" class="text-red-500">*</span>
         </label>
         <input
@@ -33,7 +33,7 @@ const inputValue = computed({
         :type="type || 'text'"
         :placeholder="placeholder"
         :required="required"
-        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+        class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <p v-if="error" class="mt-2 text-sm text-red-600">{{ error }}</p>
     </div>

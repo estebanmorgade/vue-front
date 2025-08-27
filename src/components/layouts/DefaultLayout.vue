@@ -4,8 +4,8 @@
 
 <template>
   <div>
-    <BreadCrumbs/>
     <main class="p-6">
+      <BreadCrumbs/>
       <slot />
     </main>
   </div>

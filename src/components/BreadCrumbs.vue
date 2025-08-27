@@ -1,5 +1,5 @@
 <template>
-  <nav aria-label="breadcrumb" class="text-sm text-gray-500">
+  <nav aria-label="breadcrumb" class="text-sm text-gray-500 mb-3">
     <ol class="flex items-center space-x-2">
       <li v-for="(crumb, index) in breadcrumbs" :key="index" class="flex items-center">
         <RouterLink v-if="index < breadcrumbs.length - 1" :to="crumb.to" class="hover:underline">

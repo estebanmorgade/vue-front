@@ -1,8 +1,8 @@
 <script setup lang="ts">
     import { useRoute } from 'vue-router';
-    import { useUsersStore } from '../stores/useUsersStore';
-    import type { User } from '../types/user';
-    import UserForm from '../components/UserForm.vue';
+    import { useUsersStore } from '../../stores/useUsersStore';
+    import type { User } from '../../types/user';
+    import UserForm from '../../components/users/UserForm.vue';
     import { ref } from 'vue';
 
     const route = useRoute()

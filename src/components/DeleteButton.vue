@@ -7,5 +7,5 @@
 </script>
 
 <template>
-    <button @click="emit('confirm')">Eliminar</button>
+    <button @click="emit('confirm')">Delete</button>
 </template>

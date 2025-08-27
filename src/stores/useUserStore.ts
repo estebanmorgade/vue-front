@@ -39,25 +39,38 @@ export const useUserStore = defineStore('user', {
         },
 
         async fetchUser() { // get current user
+            this.loading = true
+            this.error = null
+            const notificationStore = useNotificationStore()
             try {
                 const res = await axios.get('/me')
                 this.user = res.data
-            } catch (error) {
+            } catch (err: any) {
+                notificationStore.show(this.error = err.response?.data?.message || 'Fetch user failed', 'error')
                 this.user = null
                 this.token = null
+            } finally {
+                this.loading = false
             }
         },
 
         async logout() {
+            this.loading = true
+            this.error = null
+            const notificationStore = useNotificationStore()
             try {
                 await axios.post('/logout')
-            } catch (_) {}
-
-            const { clearToken } = useAuthStorage()
-            this.user = null
-            this.token = null
-            clearToken()
-            delete axios.defaults.headers.common['Authorization']
+            } catch (err: any) {
+                notificationStore.show(this.error = err.response?.data?.message || 'Logout failed', 'error')
+            }
+            finally {
+                const { clearToken } = useAuthStorage()
+                this.user = null
+                this.token = null
+                clearToken()
+                delete axios.defaults.headers.common['Authorization']
+                this.loading = false
+            }            
         },
 
         async initAuth() {

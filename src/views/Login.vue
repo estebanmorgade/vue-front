@@ -18,7 +18,7 @@
     const userStore = useUserStore()
     const router = useRouter()
 
-    const submit = async () => {
+    const handleLogin = async () => {
         await userStore.login(email.value, password.value)
 
         if(userStore.isLoggedIn)
@@ -31,6 +31,7 @@
 
 
 <template>
+    <!--
     <div>
         <h2>Login</h2>
         <form @submit.prevent="submit">
@@ -68,4 +69,58 @@
             <p v-if="userStore.error" class="text-red-500">{{  userStore.error }}</p>
         </form>
     </div>
+-->
+
+<div class="flex min-h-screen items-center justify-center bg-gray-100">
+    <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+      <!-- Título -->
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+
+      <!-- Formulario -->
+      <form @submit.prevent="handleLogin" class="space-y-5">
+        <!-- Email -->
+        <InputForm
+                v-model="email"
+                label="Email"
+                name="email"
+                type="email"
+                placeholder="Enter your email"
+                :required="true"
+            />
+
+        <!-- Password -->
+        <InputForm
+                v-model="password"
+                label="Password"
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+                :required="true"
+            />
+
+        <!-- Error -->
+        <p v-if="userStore.error" class="text-red-500">{{  userStore.error }}</p>
+
+        <!-- Botón -->
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          :disabled="userStore.loading"
+        >
+          <svg
+                    v-if="userStore.loading"
+                    class="animate-spin h-5 w-5 mr-2 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    >
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                    <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                </svg>
+                <span>{{ userStore.loading ? 'Loading...' : 'Login' }}</span>
+        </button>
+      </form>
+    </div>
+  </div>
 </template>
