@@ -59,7 +59,8 @@ export const useUserStore = defineStore('user', {
             this.error = null
             const notificationStore = useNotificationStore()
             try {
-                await axios.post('/logout')
+                if(this.user)
+                    await axios.post('/logout')
             } catch (err: any) {
                 notificationStore.show(this.error = err.response?.data?.message || 'Logout failed', 'error')
             }
