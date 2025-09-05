@@ -3,6 +3,7 @@
   import { computed } from 'vue';
   import { useUserStore } from './stores/useUserStore';
   import { useUsersStore } from './stores/useUsersStore';
+  import { useProjectsStore } from './stores/useProjectsStore';
   import Navbar from './components/Navbar.vue';
   import Loader from './components/Loader.vue';
   import NotificationBar from './components/NotificationBar.vue';
@@ -25,6 +26,7 @@
 
   const userStore = useUserStore()
   const usersStore = useUsersStore()
+  const projectsStore = useProjectsStore()
 </script>
 
 <template>
@@ -41,7 +43,7 @@
     <p class="text-center text-gray-500 mt-4">© 2025 Your Company</p>
     <p class="text-center text-gray-500 mt-2">All rights reserved.</p>
     <NotificationBar />
-    <Loader :show="userStore.loading || usersStore.loading"/>
+    <Loader :show="userStore.loading || usersStore.loading || projectsStore.loading"/>
   </footer>
 </template>
 
